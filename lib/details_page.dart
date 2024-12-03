@@ -25,7 +25,7 @@ class _DetailsPageState extends State<DetailsPage> {
               children: [
                 Text("Measurements and Details", style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),),
                 SizedBox(height: 16), 
-                Text("Telescope"),
+                Text("Telescope Weight"),
                 SizedBox(height: 16), 
                 Text("Mount Weight"),
                 SizedBox(height: 16), 
