@@ -16,9 +16,9 @@ class _DetailsPageState extends State<DetailsPage> {
   }
     @override
     Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: 
-        const SafeArea(child: 
+        SafeArea(child: 
           Padding(padding: EdgeInsets.all(16), child:
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,19 +36,7 @@ class _DetailsPageState extends State<DetailsPage> {
               ],
             )
           )  
-        ),
-
-
-
-      bottomNavigationBar: BottomNavigationBar(items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Setup'),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Details'),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.red[700],
-        onTap: _onItemTapped,
-      ),
+        )
     );
   }
 }

@@ -48,16 +48,7 @@ class _HomePageState extends State<HomePage> {
                 // )
               ])
             )
-          ),
-      bottomNavigationBar: BottomNavigationBar(items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Setup'),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Details'),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.red[700],
-        onTap: _onItemTapped,
-      ),
+          )
     );
   }
 }
