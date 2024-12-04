@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:balancemate/calculator.dart';
-import 'package:balancemate/database_manager.dart';
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
   @override

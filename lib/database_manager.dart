@@ -118,6 +118,16 @@ class CounterweightSetup {
   int getId() {
     return _id;
   }
+  String getName() {
+    return "$_name - $_counterweights";
+  }
+  double getWeight() {
+    double totalWeight = 0.0;
+    for (Counterweight counterweight in _counterweights) {
+      totalWeight += counterweight.getWeight();
+    }
+    return totalWeight;
+  }
 }
 
 class DatabaseManager {
