@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 
 class Telescope {
-  final int? _id;
+  final int _id;
   final String _name;
   final String _manufacturer; 
   final double _weight; 

@@ -2,18 +2,29 @@ import 'package:balancemate/database_manager.dart';
 class Calculator {
   Calculator();
 
-  double calculateDistance(Telescope telescope, Mount mount, CounterweightSetup counterweightSetup) {
-    double radius = telescope.getDiameter() / 2;
-    double weight = telescope.getWeight();
-    double? distance = mount.getDistance();
+  static Telescope? telescope;
+  static Mount? mount;
+  static dynamic counterweight;
+
+  static double? calculateDistance() {
+    if (telescope == null || mount == null || counterweight == null) {
+      return null;
+    }
+    double radius = telescope!.getDiameter() / 2;
+    double weight = telescope!.getWeight();
+    double? distance = mount!.getDistance();
     double counterweightWeight = 0.0;
     // ignore: non_constant_identifier_names it isn't used in enough places to worry about
     double RA2TelescopeCenter; 
 
-    for (var counterweight in counterweightSetup.getCounterweights()) {
-      counterweightWeight += counterweight.getWeight();
+    if (counterweight is Counterweight) {
+      counterweightWeight = counterweight.getWeight();
     }
-    
+    else if (counterweight is CounterweightSetup) {
+      for (var i in counterweight.getCounterweights()) {
+        counterweightWeight += i.getWeight();
+      }
+    }
     if (distance != null) {
       RA2TelescopeCenter = (distance + radius) / 1000;
     }
