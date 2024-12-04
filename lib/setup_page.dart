@@ -13,6 +13,9 @@ class _SetupPageState extends State<SetupPage> {
   List<DropdownMenuEntry> telescopeOptions = [];
   List<DropdownMenuEntry> mountOptions = [];
   List<DropdownMenuEntry> counterweightOptions = [];
+  Telescope? initialTelescope;
+  Mount? initialMount;
+  dynamic initialCounterweight; //is dynamic because it is either a Counterweight or a CounterweightSetup or null
 
   bool _dataLoaded = false;
   @override void initState() {
@@ -37,12 +40,34 @@ class _SetupPageState extends State<SetupPage> {
         telescopeOptions.add(DropdownMenuEntry(value: telescope, label: telescope.toString()));
       });
     }
+    if (Calculator.telescope != null) {
+      for (var i in telescopeOptions) {
+        if (i.value == Calculator.telescope) {
+          // print('Found ${i.value}');
+          // print(i.runtimeType);
+          setState(() {
+            initialTelescope = i.value;
+          });
+          break;
+        }
+      }
+    }
   }
 
   Future<void> _loadMounts(DatabaseManager db) async {
     var mounts = await db.getMounts();
     for (var mount in mounts) {
       mountOptions.add(DropdownMenuEntry(value: mount, label: mount.toString()));
+    }
+    if (Calculator.mount != null) {
+      for (var i in mountOptions) {
+        if (i.value == Calculator.mount) {
+          setState(() {
+            initialMount = i.value;
+          });
+          break;
+        }
+      }
     }
   }
 
@@ -54,6 +79,16 @@ class _SetupPageState extends State<SetupPage> {
     }
     for (Counterweight counterweight in counterweights) {
       counterweightOptions.add(DropdownMenuEntry(value: counterweight, label: counterweight.toString()));
+    }
+    if (Calculator.counterweight != null) {
+      for (var i in counterweightOptions) {
+        if (i.value == Calculator.counterweight) {
+          setState(() {
+            initialCounterweight = i.value;
+          });
+          break;
+        }
+      }
     }
   }
 
@@ -68,6 +103,7 @@ class _SetupPageState extends State<SetupPage> {
     if (mount is Mount) {
       Calculator.mount = mount;
     }
+
     // print(Calculator.mount);
   }
   void _setCounterweightSetup(dynamic counterweightSetup) {
@@ -79,6 +115,15 @@ class _SetupPageState extends State<SetupPage> {
 
   @override
   Widget build(BuildContext context) {
+    
+
+    // List<Currency> currencies = [
+    //   Currency(code: 'USD'),
+    //   Currency(code: 'EUR'),
+    //   Currency(code: 'AED'),
+    //   Currency(code: 'BTC'),
+    //   Currency(code: 'SOL'),
+    // ];
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -89,11 +134,11 @@ class _SetupPageState extends State<SetupPage> {
                     children: [
                       const Text("Telescope Selection", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 32),
-                      DropdownMenu(dropdownMenuEntries: telescopeOptions, onSelected: _setTelescope),
+                      DropdownMenu(initialSelection: initialTelescope, dropdownMenuEntries: telescopeOptions, onSelected: _setTelescope),
                       const SizedBox(height: 80),
                       const Text("Mount Selection", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 32),
-                      DropdownMenu(dropdownMenuEntries: mountOptions, onSelected: _setMount,),
+                      DropdownMenu(initialSelection: initialMount, dropdownMenuEntries: mountOptions, onSelected: _setMount,),
                       const SizedBox(height: 80),
                       const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                         Text("Counterweight Setup", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
@@ -101,8 +146,19 @@ class _SetupPageState extends State<SetupPage> {
                         // ElevatedButton(onPressed: (){}, child: const Text("+")) //Will open a page to input custom counterweight information
                       ]),
                       const SizedBox(height: 32),
-                      DropdownMenu(dropdownMenuEntries: counterweightOptions, onSelected: _setCounterweightSetup,),
+                      DropdownMenu(initialSelection: initialCounterweight, dropdownMenuEntries: counterweightOptions, onSelected: _setCounterweightSetup,),
                       //TODO: Consider adding a button to initiate the calculations here
+
+                    //   DropdownMenu(
+                    //   initialSelection: currencies[0],
+                    //   dropdownMenuEntries: [
+                    //     for (var currency in currencies)
+                    //       DropdownMenuEntry(
+                    //         label: currency.code,
+                    //         value: currency
+                    //       )
+                    //   ]
+                    // )
                     ],
                   ),
                 )
@@ -115,4 +171,10 @@ class _SetupPageState extends State<SetupPage> {
   }
 }
 
-//TODO: Make the selected ones still selected in setup page
+// class Currency {
+//       final String code;
+
+//       Currency({
+//         required this.code
+//       });
+//     }

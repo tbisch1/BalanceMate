@@ -20,6 +20,15 @@ class Telescope {
   String toString() {
     return "$_manufacturer - $_name";
   }
+  @override 
+  bool operator == (Object other) {
+    if (other is Telescope) { 
+      return _id == other._id;
+    }
+    return false;
+  }
+  @override
+  int get hashCode => _id;
 
   int? getId() {
     return _id;
@@ -31,7 +40,7 @@ class Telescope {
 
   double getDiameter() {
     return _diameter;
-  }
+  }  
 }
 
 class Mount {
@@ -47,6 +56,15 @@ class Mount {
   String toString() {
     return "$_manufacturer - $_name";
   }
+  @override 
+  bool operator == (Object other) {
+    if (other is Mount) { 
+      return _id == other._id;
+    }
+    return false;
+  }
+  @override
+  int get hashCode => _id;
 
   double? getDistance() {
     return _distance;
@@ -79,6 +97,16 @@ class Counterweight {
   String toString() {
     return "$_manufacturer - ${_weight}kg";
   }
+  
+  @override 
+  bool operator == (Object other) {
+    if (other is Counterweight) { 
+      return _id == other._id;
+    }
+    return false;
+  }
+  @override 
+  int get hashCode => _id;
 
   double getWeight() {
     return _weight;
@@ -110,6 +138,16 @@ class CounterweightSetup {
   String toString() {
     return _name;
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (other is CounterweightSetup) { 
+      return _id == other._id;
+    }
+    return false;
+  }
+  @override 
+  int get hashCode => _id;
 
   List<Counterweight> getCounterweights() {
     return _counterweights;
